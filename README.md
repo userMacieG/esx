@@ -7,3 +7,32 @@ The point of this repo is not to replace the mainstream ESX installation, ever. 
 It also doesn't come with a inventory since you shouldn't be using that garbage UI for that, make a real one.
 
 For OGs I made a development discord: https://discord.gg/H86eaEPwvK
+
+## Installation
+
+### Configuration File
+
+You need to setup the proper permissions for ESX for it to handle your server
+
+```
+add_ace resource.esx command.add_ace allow
+add_ace resource.esx command.add_principal allow
+add_ace resource.esx command.remove_principal allow
+
+# Setup Group Inhereances
+add_principal group.user builtin.everyone
+
+add_principal group.donator_level_1 group.user
+add_principal group.donator_level_2 group.donator_level_1
+add_principal group.donator_level_3 group.donator_level_2
+
+add_principal group.dev_level_1 group.user
+add_principal group.dev_level_2 group.dev_level_1
+
+add_principal group.staff_level_1 group.user
+add_principal group.staff_level_2 group.staff_level_1
+add_principal group.staff_level_3 group.staff_level_2
+add_principal group.staff_level_4 group.staff_level_3
+add_principal group.staff_level_5 group.staff_level_4
+add_principal system.console group.staff_level_5
+```
