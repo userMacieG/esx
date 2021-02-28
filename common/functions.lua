@@ -19,11 +19,15 @@ ESX.GetConfig = function() return Config end
 ESX.GetWeapon = function(weaponName)
 	weaponName = string.upper(weaponName)
 
-	return Config.Weapons[weaponName]
+	for k,v in ipairs(Config.Weapons) do
+		if v.name == weaponName then
+			return k, v
+		end
+	end
 end
 
 ESX.GetWeaponFromHash = function(weaponHash)
-	for k,v in pairs(Config.Weapons) do
+	for k,v in ipairs(Config.Weapons) do
 		if GetHashKey(v.name) == weaponHash then
 			return v
 		end
@@ -33,35 +37,25 @@ end
 ESX.GetWeaponList = function() return Config.Weapons end
 
 ESX.GetWeaponLabel = function(weaponName)
-	if not weaponName then return 'Unidentified' end
 	weaponName = string.upper(weaponName)
 
-	return Config.Weapons[weaponName].label
-end
-
-ESX.GetAmmo = function(ammoType)
-	if ammoType then
-		return Config.ammoTypes[ammoType]
-	else
-		return Config.ammoTypes
+	for k,v in ipairs(Config.Weapons) do
+		if v.name == weaponName then
+			return v.label
+		end
 	end
-end
-
-ESX.GetAmmoLabel = function(ammoType) return Config.ammoTypes[ammoType].label end
-
-ESX.GetWeaponAmmoType = function(weaponHash)
-	weaponHash = string.upper(weaponHash)
-
-	return Config.Weapons[weaponHash]
 end
 
 ESX.GetWeaponComponent = function(weaponName, weaponComponent)
 	weaponName = string.upper(weaponName)
-	local weapons = Config.Weapons
 
-	for k,v in pairs(Config.Weapons[weaponName].components) do
-		if v.name == weaponComponent then
-			return v
+	for k,v in ipairs(Config.Weapons) do
+		if v.name == weaponName then
+			for k2,v2 in ipairs(v.components) do
+				if v2.name == weaponComponent then
+					return v2
+				end
+			end
 		end
 	end
 end

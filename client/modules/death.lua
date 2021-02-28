@@ -81,8 +81,8 @@ function ProcessDeathCause(deathHash)
 	end
 
 	-- process weapon death hash
-	for name,v in pairs(Config.Weapons) do
-		if GetHashKey(name) == deathHash then
+	for k,v in ipairs(Config.Weapons) do
+		if GetHashKey(v.name) == deathHash then
 			return ('Killed using weapon "%s"'):format(v.label)
 		end
 	end
