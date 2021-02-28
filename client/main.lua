@@ -35,7 +35,6 @@ AddEventHandler('esx:playerLoaded', function(playerData)
 	NetworkSetFriendlyFireOption(true)
 
 	-- disable wanted level
-	ClearPlayerWantedLevel(PlayerId())
 	SetMaxWantedLevel(0)
 
 	ESX.Game.Teleport(PlayerPedId(), {
@@ -256,28 +255,26 @@ AddEventHandler('esx:deleteVehicle', function(radius)
 end)
 
 function StartServerSyncLoops()
-	-- keep track of ammo
+	-- keep track of ammo, needs rewrite probably or some better method
 	Citizen.CreateThread(function()
 		while true do
 			Citizen.Wait(0)
+			local playerPed = PlayerPedId()
 
-			if isDead then
-				Citizen.Wait(500)
-			else
-				local playerPed = PlayerPedId()
+			if IsPedArmed(playerPed, 4) then
 				if IsPedShooting(playerPed) then
 					local _,weaponHash = GetCurrentPedWeapon(playerPed, true)
 					local weapon = ESX.GetWeaponFromHash(weaponHash)
 
-					while IsControlPressed(0, 24) do
-						Citizen.Wait(0)
-					end
+					while IsControlPressed(0, 24) do Citizen.Wait(100) end
 
 					if weapon then
 						local ammoCount = GetAmmoInPedWeapon(playerPed, weaponHash)
 						TriggerServerEvent('esx:updateWeaponAmmo', weapon.name, ammoCount)
 					end
 				end
+			else
+				Citizen.Wait(500)
 			end
 		end
 	end)
