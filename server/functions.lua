@@ -170,11 +170,12 @@ end
 ESX.SavePlayer = function(xPlayer, cb)
 	MySQL.Async.execute([===[
 		UPDATE users SET
-			accounts = @accounts, job = @job, job_grade = @job_grade, loadout = @loadout,
+			name = @name, groups = #groups, accounts = @accounts, job = @job, job_grade = @job_grade, loadout = @loadout,
 			position = @position, inventory = @inventory,
 			skin = @skin, status = @status, health = @health, armour = @armour
 		WHERE identifier = @identifier
 		]===], {
+		['@name'] = xPlayer.getName(), ['@groups'] = json.encode(xPlayer.getGroups())
 		['@accounts'] = json.encode(xPlayer.getAccounts(true)), ['@position'] = json.encode(xPlayer.getCoords()),
 		['@job'] = xPlayer.job.name, ['@job_grade'] = xPlayer.job.grade,
 		['@inventory'] = json.encode(xPlayer.getInventory(true)), ['@loadout'] = json.encode(xPlayer.getLoadout(true)),
