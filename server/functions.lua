@@ -170,7 +170,7 @@ end
 ESX.SavePlayer = function(xPlayer, cb)
 	MySQL.Async.execute([===[
 		UPDATE users SET
-			name = @name, groups = #groups, accounts = @accounts, job = @job, job_grade = @job_grade, loadout = @loadout,
+			name = @name, groups = @groups, accounts = @accounts, job = @job, job_grade = @job_grade, loadout = @loadout,
 			position = @position, inventory = @inventory,
 			skin = @skin, status = @status, health = @health, armour = @armour
 		WHERE identifier = @identifier
