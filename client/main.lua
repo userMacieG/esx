@@ -15,6 +15,8 @@ end)
 -- again you might also want to remove this code, too if you want a smooth tranision with your character script
 RegisterNetEvent('esx:playerLoaded')
 AddEventHandler('esx:playerLoaded', function(playerData)
+	ESX.PlayerLoaded = true
+
 	for k,v in pairs(playerData) do
 		ESX.PlayerData[k] = v
 	end
